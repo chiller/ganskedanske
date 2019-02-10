@@ -11,7 +11,7 @@ import japgolly.scalajs.react.vdom.html_<^.{<, _}
       props =>
         def createItem(itemText: String) = <.li(itemText)
 
-        <.ul(props map createItem: _*)
+        <.ul((props map createItem): _*)
     }
 
     case class State(items: List[String], text: String)

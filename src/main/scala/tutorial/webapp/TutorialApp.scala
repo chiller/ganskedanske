@@ -1,13 +1,7 @@
 package tutorial.webapp
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import tutorial.webapp.components.Timer
-import tutorial.webapp.components.TodoApp
-
-import scala.scalajs.js
-
-
-
+import tutorial.webapp.components.{Timer, TodoApp, VocabularyTrainer}
 
 object TutorialApp {
 
@@ -17,14 +11,9 @@ object TutorialApp {
   val MainPage =
     ScalaComponent.static("Main")(
       <.div(
-        <.div("Hello Main"),
-        NoArgs(),
-        NoArgs(),
-        NoArgs(),
         <.div("=========================="),
-        Timer.Timer(),
-        <.div("=========================="),
-        TodoApp.TodoApp()
+        VocabularyTrainer.component(),
+        <.div("==========================")
       )
     )
 
