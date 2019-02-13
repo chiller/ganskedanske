@@ -25,22 +25,23 @@ object VocabularyTrainer {
 
   class Backend($: BackendScope[Unit, State]){
 
-    def init() = {
+    def init(): CallbackTo[Unit] = {
       $.setState(State(0, Some(nextExercise())))
     }
 
-    def handleSubmit(answer: String)(e: ReactEventFromInput) = {
+    def handleSubmit(answer: String)(e: ReactEventFromInput): CallbackTo[Unit] = {
       val next = nextExercise()
       e.preventDefaultCB >> $.modState(s => {
-        val score = (s.exercise.get.answer == answer) match {
-          case true => s.score + 1
-          case false => s.score
+        val score = if (s.exercise.get.answer == answer) {
+          s.score + 1
+        } else {
+          s.score
         }
         State(score, Some(next))
       })
     }
 
-    def nextExercise() = {
+    def nextExercise(): Exercise = {
       val index: Int = Random.nextInt(exercises.length)
       val answers = Random.shuffle(
         solutions(index) :: Random.shuffle(solutions.toList.filter(_ != solutions(index))).take(3)
